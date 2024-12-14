@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relatório de Monitoramento</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f9;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .graphs {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+        .graph-container {
+            width: 40%;
+        }
+        .report {
+            width: 90%;
+            padding: 15px;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            overflow-y: scroll;
+            max-height: 300px;
+            white-space: pre-wrap;
+            font-family: "Courier New", Courier, monospace;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        img {
+            width: 100%;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        img:active {
+            transform: scale(1.5);
+        }
+        .lampada {
+            display: block;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin: 10px auto;
+            background-color: green;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .lampada.piscar {
+            animation: piscar 1s infinite alternate;
+        }
+        @keyframes piscar {
+            0% {
+                background-color: red;
+            }
+            100% {
+                background-color: darkred;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="header">
+            <h1>Relatório de Monitoramento</h1>
+        </div>
+
+        <div class="content">
+            <h2>Conteúdo do Relatório</h2>
+            <div class="report">
+                Relatório de Monitoramento - 14-12-2024
+
+Métricas Coletadas
+
+Horário   Fluxos f/s           Pacotes p/s          Tráfego Mb/s
+17:55:00   4.40                 16.47                132.24
+18:00:00   3.60                 18.59                162.16
+18:05:00   0                    0                    0
+18:10:00   0                    0                    0
+18:15:00   0                    0                    0
+
+Anomalias Detectadas
+            </div>
+        </div>
+
+        <div class="graphs">
+            <div class="graph-container">
+                <h3>Gráfico de Flows</h3>
+                <img src="grafico_trafego_flows.png" alt="Gráfico de Flows" class="flows-graph">
+                <div class="lampada verde" id="lampada-flows"></div>
+            </div>
+            <div class="graph-container">
+                <h3>Gráfico de Pacotes</h3>
+                <img src="grafico_trafego_packets.png" alt="Gráfico de Pacotes" class="packets-graph">
+                <div class="lampada verde" id="lampada-packets"></div>
+            </div>
+            <div class="graph-container">
+                <h3>Gráfico de Tráfego</h3>
+                <img src="grafico_trafego_traffic.png" alt="Gráfico de Tráfego" class="trafego-graph">
+                <div class="lampada vermelho piscar" id="lampada-trafego"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Função para aumentar o tamanho da imagem ao clicar
+        const graphs = document.querySelectorAll('img');
+
+        graphs.forEach(graph => {
+            graph.addEventListener('click', function() {
+                // Alterna o tamanho do gráfico
+                if (this.style.transform === 'scale(1.5)') {
+                    this.style.transform = 'scale(1)';
+                } else {
+                    this.style.transform = 'scale(1.5)';
+                }
+            });
+        });
+
+        // Função para alternar entre lâmpada acesa e apagada
+        const lamps = document.querySelectorAll('.lampada');
+
+        lamps.forEach(lamp => {
+            lamp.addEventListener('click', function() {
+                if (this.classList.contains('piscar')) {
+                    // Remover o piscar (voltar para verde)
+                    this.classList.remove('piscar');
+                    this.style.backgroundColor = 'green';
+                } else {
+                    // Adicionar o piscar (vermelho)
+                    this.classList.add('piscar');
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
+
+
